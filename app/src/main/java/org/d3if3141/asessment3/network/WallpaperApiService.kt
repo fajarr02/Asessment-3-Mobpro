@@ -28,4 +28,8 @@ object WallpaperApi {
     val service: WallpaperApiService by lazy {
         retrofit.create(WallpaperApiService::class.java)
     }
+
+    fun getWallpaperUrl(imageId: String): String {
+        return "$BASE_URL$imageId.jpg"
+    }
 }
