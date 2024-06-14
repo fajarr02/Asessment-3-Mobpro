@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -87,11 +88,17 @@ fun ListItem(wallpaper: Wallpaper) {
     ){
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(WallpaperApi.getWallpaperUrl(wallpaper.imageId))
+                .data(
+                    //  if (city.city == "Jakarta"){
+                    //   CityApi.getCityUrl("not-found")
+                    //    } else
+                    WallpaperApi.getWallpaperUrl(wallpaper.imageId))
                 .crossfade(true)
                 .build(),
             contentDescription = stringResource(id = R.string.gambar, wallpaper.wallpaper),
             contentScale = ContentScale.Crop,
+            error = painterResource(id = R.drawable.baseline_broken_image_24),
+            placeholder = painterResource(id = R.drawable.loading_img),
             modifier = Modifier.fillMaxWidth().padding(4.dp)
         )
 
