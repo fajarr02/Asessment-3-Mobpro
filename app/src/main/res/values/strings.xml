@@ -15,4 +15,8 @@
     <string name="impression">Impression</string>
     <string name="batal">Batal</string>
     <string name="simpan">Simpan</string>
+
+    <string name="pesan_hapus">Hapus data ini?</string>
+    <string name="tombol_hapus">Hapus</string>
+    <string name="tombol_batal">Batal</string>
 </resources>

@@ -9,11 +9,13 @@ import org.d3if3141.asessment3.model.OpStatus
 import org.d3if3141.asessment3.model.Wallpaper
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://unspoken.my.id/"
 
@@ -40,6 +42,12 @@ interface WallpaperApiService {
         @Part("wallpaper") wallpaper: RequestBody,
         @Part("impression") impression: RequestBody,
         @Part image: MultipartBody.Part
+    ): OpStatus
+
+    @DELETE("api_yaumil.php")
+    suspend fun deleteWallpaper(
+        @Header("Authorization") userId: String,
+        @Query("id") id: String
     ): OpStatus
 }
 
