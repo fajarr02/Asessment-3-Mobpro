@@ -8,6 +8,7 @@ import android.graphics.ImageDecoder
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -89,10 +90,15 @@ fun MainScreen() {
     val dataStore = UserDataStore(context)
     val user by dataStore.userFlow.collectAsState(User())
     var showDialog by remember { mutableStateOf(false) }
+    var showWallpaperDialog by remember { mutableStateOf(false) }
+
+    val viewModel: MainViewModel = viewModel()
+    val errorMessage by viewModel.errorMessage
 
     var bitmap: Bitmap? by remember { mutableStateOf(null) }
     val launcher = rememberLauncherForActivityResult(CropImageContract()) {
         bitmap = getCroppedImage(context.contentResolver, it)
+        if (bitmap != null) showWallpaperDialog = true
     }
 
 
@@ -142,7 +148,7 @@ fun MainScreen() {
             }
         }
     ) {padding ->
-        ScreenContent(Modifier.padding(padding))
+        ScreenContent(viewModel, Modifier.padding(padding))
         if (showDialog) {
             ProfilDialog(
                 user = user,
@@ -151,12 +157,27 @@ fun MainScreen() {
                 showDialog = false
             }
         }
+
+        if (showWallpaperDialog) {
+            WallpaperDialog(
+                bitmap = bitmap,
+                onDismissRequest = { showWallpaperDialog = false }) { wallpaper, impression ->
+                viewModel.saveData(user.email, wallpaper, impression, bitmap!!)
+                showWallpaperDialog = false
+            }
+        }
+
+
+        if (errorMessage != null) {
+            Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+            viewModel.clearMessage()
+        }
     }
 }
 
 
 @Composable
-fun ScreenContent(modifier: Modifier) {
+fun ScreenContent(viewModel: MainViewModel, modifier: Modifier) {
 
     val viewModel: MainViewModel = viewModel()
     val data by viewModel.data

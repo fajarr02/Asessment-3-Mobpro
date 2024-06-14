@@ -10,4 +10,9 @@
     <string name="tutup">Tutup</string>
     <string name="logout">Logout</string>
     <string name="tambah_wallpaper">Tambah wallpaper</string>
+
+    <string name="wallpaper">Wallpaper</string>
+    <string name="impression">Impression</string>
+    <string name="batal">Batal</string>
+    <string name="simpan">Simpan</string>
 </resources>
