@@ -28,7 +28,9 @@ private val retrofit = Retrofit.Builder()
 
 interface WallpaperApiService {
     @GET("api_yaumil.php")
-    suspend fun getWallpaper():  List<Wallpaper>
+    suspend fun getWallpaper(
+        @Header("Authorization") userId: String
+    ): List<Wallpaper>
 
 
     @Multipart
